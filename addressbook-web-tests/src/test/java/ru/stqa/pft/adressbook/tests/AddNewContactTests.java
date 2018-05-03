@@ -1,4 +1,4 @@
-package ru.stqa.pft.adressbook;
+package ru.stqa.pft.adressbook.tests;
 
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.annotations.BeforeMethod;
@@ -11,7 +11,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.*;
 import ru.stqa.pft.adressbook.model.NewContact;
 
-public class AddNewContact {
+public class AddNewContactTests {
   FirefoxDriver wd;
 
   @BeforeMethod
