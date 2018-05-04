@@ -12,6 +12,7 @@ public class AddNewContactTests extends TestBase {
     app.getContactHelper().fillContactForm(new NewContact("kira5", "kilanina", "Lermontowska 20/9\\nPoland\\n30-300"));
     app.getContactHelper().submitNewContact();
     app.getContactHelper().returnToContactPage();
+    app.getGroupHelper().returnToGroupPage();
   }
 
 }
