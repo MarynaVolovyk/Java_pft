@@ -6,18 +6,18 @@ import ru.stqa.pft.adressbook.model.GroupData;
 public class GroupDeletionTests extends TestBase {
 
 
-    @Test
-    public void testGroupDeletion() {
+  @Test
+  public void testGroupDeletion() {
 
-        app.getNavigationHelper().gotoGroupPage();
-        if (!app.getGroupHelper().isThereAGroup()) {
-            app.getGroupHelper().createGroup(new GroupData("test1", null, null));
+    app.getNavigationHelper().gotoGroupPage();
+    if (!app.getGroupHelper().isThereAGroup()) {
+      app.getGroupHelper().createGroup(new GroupData("test1", null, null));
 
-        }
-        app.getGroupHelper().selectGroup();
-        app.getGroupHelper().deleteSelectedGroup();
-        app.getGroupHelper().returnToGroupPage();
     }
+    app.getGroupHelper().selectGroup();
+    app.getGroupHelper().deleteSelectedGroup();
+    app.getGroupHelper().returnToGroupPage();
+  }
 }
 
 
