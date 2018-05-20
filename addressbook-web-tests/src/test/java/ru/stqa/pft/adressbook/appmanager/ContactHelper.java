@@ -1,10 +1,8 @@
 package ru.stqa.pft.adressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.adressbook.model.NewContact;
@@ -23,7 +21,7 @@ public class ContactHelper extends HelperBase {
 
   public void fillContactForm(NewContact newContact, boolean creation) {
     type(By.name("firstname"), newContact.getName());
-    type(By.name("lastname"), newContact.getPassword());
+    type(By.name("lastname"), newContact.getLastname());
     type(By.name("address"), newContact.getAddress1());
 
     if (creation) {
@@ -36,8 +34,8 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("home page"));
   }
 
-  public void initContactModification() {
-    click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+  public void initContactModification(int index) {
+    click(By.xpath("//table[@id='maintable']/tbody/tr["+(index+2)+"]/td[8]/a/img"));
   }
 
   public void submitContactModification() {
@@ -70,14 +68,15 @@ public class ContactHelper extends HelperBase {
     return wd.findElements(By.name("selected[]")).size();
   }
   public List<NewContact> getContactList() {
-    List<NewContact> groups = new ArrayList<NewContact>();
-    List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
+    List<NewContact> contacts = new ArrayList<NewContact>();
+    List<WebElement> elements = wd.findElements(By.xpath("//tr[@name='entry']"));
     for (WebElement element: elements) {
-      String name = element.getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      NewContact contact = new NewContact(id, name, null, null);
-      groups.add(contact);
+      String name = element.findElement(By.xpath(String.format("//tr[.//input[@value='%s']]/td[3]", id))).getText();
+      String lastname = element.findElement(By.xpath(String.format("//tr[.//input[@value='%s']]/td[2]", id))).getText();
+      NewContact contact = new NewContact(id, name, lastname, null);
+      contacts.add(contact);
     }
-    return groups;
+    return contacts;
   }
 }

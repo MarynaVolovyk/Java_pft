@@ -5,13 +5,13 @@ import java.util.Objects;
 public class NewContact {
   private int id;
   private final String name;
-  private final String password;
+  private final String lastname;
   private final String address1;
   private String group;
 
-  public NewContact(String name, String password, String address1, String group) {
+  public NewContact(String name, String lastname, String address1, String group) {
     this.name = name;
-    this.password = password;
+    this.lastname = lastname;
     this.address1 = address1;
     this.group = group;
   }
@@ -19,34 +19,42 @@ public class NewContact {
   public String getName() {
     return name;
   }
-
-  public String getPassword() {
-    return password;
+  public String getLastname() {
+    return lastname;
   }
-
   public String getAddress1() {
     return address1;
   }
-
   public String getGroup() {
     return group;
   }
 
-  public NewContact(String name, String password, String address1) {
-    this.id = Integer.MAX_VALUE;
-    this.name = name;
-    this.password = password;
-    this.address1 = address1;
-  }
-  public NewContact(int id, String name, String password, String address1) {
+  public NewContact(int id, String name, String lastname, String address1) {
     this.id = id;
     this.name = name;
-    this.password = password;
+    this.lastname = lastname;
+    this.address1 = address1;
+  }
+  public NewContact( String name, String lastname, String address1) {
+
+    this.name = name;
+    this.lastname = lastname;
     this.address1 = address1;
   }
 
   public void setId(int id) {
     this.id = id;
+  }
+
+  @Override
+  public String toString() {
+    return "NewContact{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", lastname='" + lastname + '\'' +
+            ", address1='" + address1 + '\'' +
+            ", group='" + group + '\'' +
+            '}';
   }
 
   public int getId() {
@@ -62,15 +70,6 @@ public class NewContact {
 
   @Override
   public int hashCode() {
-
     return Objects.hash(name);
   }
-  @Override
-  public String toString() {
-    return "GroupData{" +
-            "id='" + id + '\'' +
-            ", name='" + name + '\'' +
-            '}';
-  }
-
 }
