@@ -3,11 +3,11 @@ package ru.stqa.pft.adressbook.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.adressbook.model.NewContact;
+import java.util.List;
 
 public class ContactDeletionTests extends TestBase {
 
   @Test
-
   public void testContactDeletion() {
 
     app.getNavigationHelper().gotoHome();
@@ -15,12 +15,17 @@ public class ContactDeletionTests extends TestBase {
       app.getNavigationHelper().gotoAddNew();
       app.getContactHelper().createContact(new NewContact("katia", "annete", "Rydluwka 5, Krakow", "test1"), true);
     }
-    int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().selectContact(before - 1);
+
+    List<NewContact> before = app.getContactHelper().getContactList();
+    app.getContactHelper().selectContact(before.size() - 1);
     app.getContactHelper().deleteContactSelected();
     app.getContactHelper().confirmContactDeletion();
     app.getNavigationHelper().gotoHome();
-    int after = app.getContactHelper().getContactCount();
-    Assert.assertEquals(after, before - 1);
+    List<NewContact> after = app.getContactHelper().getContactList();
+    Assert.assertEquals(after.size(), before.size() - 1);
+
+    before.remove(before.size() - 1);
+    Assert.assertEquals(before, after);
+
   }
 }
