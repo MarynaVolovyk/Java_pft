@@ -10,7 +10,7 @@ import java.util.Comparator;
 
 public class ContactCreationTests extends TestBase {
 
-  @Test
+  @Test(enabled = true)
   public void testAddNewContact() {
     app.getNavigationHelper().gotoHome();
     List<NewContact> before = app.getContactHelper().getContactList();
