@@ -24,13 +24,9 @@ public class ApplicationManager {
 
   public ApplicationManager(String browser) {
     this.browser = browser;
-
   }
 
-
   public void init() {
-
-
     if (browser.equals(BrowserType.FIREFOX)) {
       wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
     } else if (browser.equals(BrowserType.CHROME)) {
@@ -46,19 +42,17 @@ public class ApplicationManager {
     sessionHelper = new SessionHelper(wd);
     contactHelper = new ContactHelper(wd);
     sessionHelper.login("admin", "secret");
-
   }
     public void stop() {
       wd.quit();
     }
-
-    public GroupHelper getGroupHelper() {
+    public GroupHelper group() {
       return groupHelper;
     }
     public ContactHelper getContactHelper() {
       return contactHelper;
     }
-    public NavigationHelper getNavigationHelper() {
+    public NavigationHelper goTo() {
       return navigationHelper;
     }
 

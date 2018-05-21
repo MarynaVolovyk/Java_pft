@@ -7,12 +7,12 @@ import java.util.List;
 
 public class ContactDeletionTests extends TestBase {
 
-  @Test(enabled = true)
+  @Test
   public void testContactDeletion() {
 
-    app.getNavigationHelper().gotoHome();
+    app.goTo().gotoHome();
     if (!app.getContactHelper().isThereAContact()) {
-      app.getNavigationHelper().gotoAddNew();
+      app.goTo().gotoAddNew();
       app.getContactHelper().createContact(new NewContact("katia", "annete", "Rydluwka 5, Krakow", "test1"), true);
     }
 
@@ -20,7 +20,7 @@ public class ContactDeletionTests extends TestBase {
     app.getContactHelper().selectContact(before.size() - 1);
     app.getContactHelper().deleteContactSelected();
     app.getContactHelper().confirmContactDeletion();
-    app.getNavigationHelper().gotoHome();
+    app.goTo().gotoHome();
     List<NewContact> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size() - 1);
 

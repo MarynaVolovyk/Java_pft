@@ -11,14 +11,14 @@ public class ContactModificationTests extends TestBase {
 
   @BeforeMethod
   public void testGroupModification() {
-    app.getNavigationHelper().gotoHome();
+    app.goTo().gotoHome();
     if (!app.getContactHelper().isThereAContact()) {
-      app.getNavigationHelper().gotoAddNew();
+      app.goTo().gotoAddNew();
       app.getContactHelper().createContact(new NewContact("katia", "annete", "Rydluwka 5, Krakow", "test1"), true);
     }
   }
 
-  @Test(enabled = true)
+  @Test
   public void testContactModification() {
 
     List<NewContact> before = app.getContactHelper().getContactList();
@@ -26,7 +26,7 @@ public class ContactModificationTests extends TestBase {
     NewContact contact = new NewContact(before.get(before.size() - 1).getId(),"Met", "Red", null);
     app.getContactHelper().fillContactForm(contact, false);
     app.getContactHelper().submitContactModification();
-    app.getNavigationHelper().gotoHome();
+    app.goTo().gotoHome();
     List<NewContact> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size());
 

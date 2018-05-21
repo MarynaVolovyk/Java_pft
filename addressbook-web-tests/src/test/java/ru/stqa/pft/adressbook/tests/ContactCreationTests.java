@@ -3,19 +3,18 @@ package ru.stqa.pft.adressbook.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.adressbook.model.NewContact;
-
 import java.util.List;
 import java.util.Comparator;
 
 
 public class ContactCreationTests extends TestBase {
 
-  @Test(enabled = true)
+  @Test
   public void testAddNewContact() {
-    app.getNavigationHelper().gotoHome();
+    app.goTo().gotoHome();
     List<NewContact> before = app.getContactHelper().getContactList();
     NewContact contact = new NewContact("mila", "Ri", "Rydluwka 5, Krakow", "test1");
-    app.getNavigationHelper().gotoAddNew();
+    app.goTo().gotoAddNew();
     app.getContactHelper().createContact(contact, true);
     List<NewContact> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size() + 1);
