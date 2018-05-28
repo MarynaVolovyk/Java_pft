@@ -38,6 +38,9 @@ public class GroupHelper extends HelperBase {
     click(By.xpath("//div[@id='content']/form/input[5]"));
   }
 
+  public void selectGroupById(int id) {
+    wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
+  }
   public void selectGroup(int index) {
     wd.findElements(By.name("selected[]")).get(index).click();
   }
@@ -96,6 +99,11 @@ public class GroupHelper extends HelperBase {
   }
   public void delete(int index) {
     selectGroup(index);
+    deleteSelectedGroup();
+    returnToGroupPage();
+  }
+  public void delete(GroupData group) {
+    selectGroupById(group.getId());
     deleteSelectedGroup();
     returnToGroupPage();
   }
