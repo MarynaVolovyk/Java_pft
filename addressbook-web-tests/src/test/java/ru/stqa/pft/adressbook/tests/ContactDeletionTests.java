@@ -13,7 +13,7 @@ public class ContactDeletionTests extends TestBase {
     app.goTo().home();
     if (!app.contact().isThereAContact()) {
       app.goTo().gotoAddNew();
-      app.contact().createContact(new NewContact("katia", "annete", "Rydluwka 5, Krakow", "test1"), true);
+      app.contact().createContact(new NewContact().withName("katia").withAddress1("Rydluwka 5, Krakow").withLastname("annete").withGroup("test1"), true);
     }
 
     List<NewContact> before = app.contact().list();

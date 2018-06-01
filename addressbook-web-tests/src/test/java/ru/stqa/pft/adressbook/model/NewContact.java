@@ -4,17 +4,10 @@ import java.util.Objects;
 
 public class NewContact {
   private int id;
-  private final String name;
-  private final String lastname;
-  private final String address1;
+  private String name;
+  private String lastname;
+  private String address1;
   private String group;
-
-  public NewContact(String name, String lastname, String address1, String group) {
-    this.name = name;
-    this.lastname = lastname;
-    this.address1 = address1;
-    this.group = group;
-  }
 
   public String getName() {
     return name;
@@ -29,21 +22,22 @@ public class NewContact {
     return group;
   }
 
-  public NewContact(int id, String name, String lastname, String address1) {
-    this.id = id;
-    this.name = name;
-    this.lastname = lastname;
-    this.address1 = address1;
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    NewContact that = (NewContact) o;
+    return id == that.id &&
+            Objects.equals(name, that.name) &&
+            Objects.equals(lastname, that.lastname) &&
+            Objects.equals(address1, that.address1) &&
+            Objects.equals(group, that.group);
   }
-  public NewContact( String name, String lastname, String address1) {
 
-    this.name = name;
-    this.lastname = lastname;
-    this.address1 = address1;
-  }
+  @Override
+  public int hashCode() {
 
-  public void setId(int id) {
-    this.id = id;
+    return Objects.hash(id, name, lastname, address1, group);
   }
 
   @Override
@@ -57,19 +51,13 @@ public class NewContact {
             '}';
   }
 
+  public NewContact withId(int id) { this.id = id; return this; }
+  public NewContact withName(String name) { this.name = name; return this;}
+  public NewContact withLastname(String lastname) { this.lastname = lastname; return this; }
+  public NewContact withAddress1(String address1) { this.address1 = address1; return this;}
+  public NewContact withGroup(String group) { this.group = group; return this;}
   public int getId() {
     return id;
   }
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    NewContact newContact = (NewContact) o;
-    return Objects.equals(name, newContact.name);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(name);
-  }
 }

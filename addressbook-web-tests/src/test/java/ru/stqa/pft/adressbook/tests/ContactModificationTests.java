@@ -14,7 +14,7 @@ public class ContactModificationTests extends TestBase {
     app.goTo().home();
     if (!app.contact().isThereAContact()) {
       app.goTo().gotoAddNew();
-      app.contact().createContact(new NewContact("katia", "annete", "Rydluwka 5, Krakow", "test1"), true);
+//     app.contact().createContact(new NewContact("katia", "annete", "Rydluwka 5, Krakow", "test1"), true);
     }
   }
 
@@ -23,7 +23,7 @@ public class ContactModificationTests extends TestBase {
 
     List<NewContact> before = app.contact().list();
     app.contact().initContactModification(before.size() -1);
-    NewContact contact = new NewContact(before.get(before.size() - 1).getId(),"Met", "Red", null);
+    NewContact contact = new NewContact().withId(before.get(before.size() - 1).getId()).withName("Met").withLastname("Red");
     app.contact().fillContactForm(contact, false);
     app.contact().submitContactModification();
     app.goTo().home();
@@ -31,7 +31,7 @@ public class ContactModificationTests extends TestBase {
     Assert.assertEquals(after.size(), before.size());
 
     before.remove(before.size() -1);
-    before.add(contact);
+//    before.add(contact);
     Comparator<? super NewContact> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
     before.sort(byId);
     after.sort(byId);
