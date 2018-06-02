@@ -21,6 +21,14 @@ public class NewContact {
   public String getGroup() {
     return group;
   }
+  public NewContact withId(int id) { this.id = id; return this; }
+  public NewContact withName(String name) { this.name = name; return this;}
+  public NewContact withLastname(String lastname) { this.lastname = lastname; return this; }
+  public NewContact withAddress1(String address1) { this.address1 = address1; return this;}
+  public NewContact withGroup(String group) { this.group = group; return this;}
+  public int getId() {
+    return id;
+  }
 
   @Override
   public boolean equals(Object o) {
@@ -30,16 +38,12 @@ public class NewContact {
     return id == that.id &&
             Objects.equals(name, that.name) &&
             Objects.equals(lastname, that.lastname) &&
-            Objects.equals(address1, that.address1) &&
-            Objects.equals(group, that.group);
+            Objects.equals(address1, that.address1);
   }
 
   @Override
-  public int hashCode() {
-
-    return Objects.hash(id, name, lastname, address1, group);
+  public int hashCode() {    return Objects.hash(id, name, lastname, address1);
   }
-
   @Override
   public String toString() {
     return "NewContact{" +
@@ -50,14 +54,4 @@ public class NewContact {
             ", group='" + group + '\'' +
             '}';
   }
-
-  public NewContact withId(int id) { this.id = id; return this; }
-  public NewContact withName(String name) { this.name = name; return this;}
-  public NewContact withLastname(String lastname) { this.lastname = lastname; return this; }
-  public NewContact withAddress1(String address1) { this.address1 = address1; return this;}
-  public NewContact withGroup(String group) { this.group = group; return this;}
-  public int getId() {
-    return id;
-  }
-
-}
+ }
