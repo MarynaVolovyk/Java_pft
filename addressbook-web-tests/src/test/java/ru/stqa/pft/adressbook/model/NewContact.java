@@ -31,6 +31,17 @@ public class NewContact {
   }
 
   @Override
+  public String toString() {
+    return "NewContact{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", lastname='" + lastname + '\'' +
+            ", address1='" + address1 + '\'' +
+            ", group='" + group + '\'' +
+            '}';
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
@@ -42,16 +53,8 @@ public class NewContact {
   }
 
   @Override
-  public int hashCode() {    return Objects.hash(id, name, lastname, address1);
+  public int hashCode() {
+
+    return Objects.hash(id, name, lastname, address1);
   }
-  @Override
-  public String toString() {
-    return "NewContact{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", lastname='" + lastname + '\'' +
-            ", address1='" + address1 + '\'' +
-            ", group='" + group + '\'' +
-            '}';
-  }
- }
+}

@@ -37,8 +37,12 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("home page"));
   }
 
-  public void initContactModification(int index) {
+   public void initContactModification(int index) {
     click(By.xpath("//table[@id='maintable']/tbody/tr["+(index+2)+"]/td[8]/a/img"));
+  }
+  public void modify(NewContact contact) {
+    fillContactForm(contact, false);
+    submitContactModification();
   }
 
   public void submitContactModification() {
