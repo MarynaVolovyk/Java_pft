@@ -88,18 +88,4 @@ public class ContactHelper extends HelperBase {
     }
     return contacts;
   }
-
-  public List<NewContact> list() {
-    List<NewContact> contacts = new ArrayList<NewContact>();
-    List<WebElement> elements = wd.findElements(By.xpath("//tr[@name='entry']"));
-    for (WebElement element: elements) {
-      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      String name = element.findElement(By.xpath(String.format("//tr[.//input[@value='%s']]/td[3]", id))).getText();
-      String lastname = element.findElement(By.xpath(String.format("//tr[.//input[@value='%s']]/td[2]", id))).getText();
-      NewContact contact = new NewContact().withId(id).withName(name).withLastname(lastname);
-      contacts.add(contact);
-    }
-    return contacts;
-  }
-
-}
+ }
