@@ -15,7 +15,7 @@ public class ContactModificationTests extends TestBase {
     app.goTo().home();
     if (!app.contact().isThereAContact()) {
       app.goTo().gotoAddNew();
-     app.contact().createContact(new NewContact().withName("katia").withLastname("annete").withAddress1("Rydluwka 5, Krakow").withGroup( "test1"), true);
+     app.contact().create(new NewContact().withName("katia").withLastname("annete").withAddress1("Rydluwka 5, Krakow").withGroup( "test1"), true);
     }
   }
 
@@ -24,8 +24,7 @@ public class ContactModificationTests extends TestBase {
 
     Contacts before = app.contact().all();
     NewContact modifiedContact = before.iterator().next();
-    app.contact().initContactModification(before.size() -1);
-    NewContact contact = new NewContact().withId(modifiedContact.getId()).withName("Met").withLastname("Red").withAddress1("dom");
+    NewContact contact = new NewContact().withId(modifiedContact.getId()).withName("Ali").withLastname("Kar").withAddress1("dom3");
     app.contact().modify(contact);
     app.goTo().home();
     Contacts after = app.contact().all();

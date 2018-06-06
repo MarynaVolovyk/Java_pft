@@ -15,7 +15,7 @@ public class ContactDeletionTests extends TestBase {
     app.goTo().home();
     if (!app.contact().isThereAContact()) {
       app.goTo().gotoAddNew();
-      app.contact().createContact(new NewContact().withName("katia").withAddress1("Rydluwka 5, Krakow").withLastname("annete").withGroup("test1"), true);
+      app.contact().create(new NewContact().withName("katia").withAddress1("Rydluwka 5, Krakow").withLastname("annete").withGroup("test1"), true);
     }
   }
 
@@ -24,7 +24,7 @@ public class ContactDeletionTests extends TestBase {
 
     Contacts before = app.contact().all();
     NewContact deletedContact = before.iterator().next();
-    app.contact().delete(before);
+    app.contact().delete(deletedContact);
     app.goTo().home();
     Contacts after = app.contact().all();
     assertEquals(after.size(), before.size() - 1);

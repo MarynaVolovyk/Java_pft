@@ -8,10 +8,7 @@ import org.testng.Assert;
 import ru.stqa.pft.adressbook.model.Contacts;
 import ru.stqa.pft.adressbook.model.NewContact;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -39,21 +36,34 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("home page"));
   }
 
-  public void initContactModification(int index) {
-    click(By.xpath("//table[@id='maintable']/tbody/tr[" + (index + 2) + "]/td[8]/a/img"));
+  public void initContactModification(int id) {
+    wd.findElement(By.xpath(String.format("//tr[.//input[@value='%s']]/td[8]/a", id))).click();
+  }
+
+  public void create(NewContact contact, boolean b) {
+    fillContactForm(contact, b);
+    submitNewContact();
+    contactCache = null;
+    returnToContactPage();
   }
 
   public void modify(NewContact contact) {
+    selectContactById(contact.getId());
+    initContactModification(contact.getId());
     fillContactForm(contact, false);
     submitContactModification();
     contactCache = null;
   }
 
-  public void delete(Contacts before) {
-    selectContact(before.size() - 1);
+  public void delete(NewContact contact) {
+    selectContactById(contact.getId());
     deleteContactSelected();
     confirmContactDeletion();
     contactCache = null;
+  }
+
+  public void selectContactById(int id) {
+    wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
 
   public void submitContactModification() {
@@ -70,13 +80,6 @@ public class ContactHelper extends HelperBase {
 
   public void confirmContactDeletion() {
     wd.switchTo().alert().accept();
-  }
-
-  public void createContact(NewContact contact, boolean b) {
-    fillContactForm(contact, b);
-    submitNewContact();
-    contactCache = null;
-    returnToContactPage();
   }
 
   public boolean isThereAContact() {

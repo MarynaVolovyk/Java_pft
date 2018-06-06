@@ -12,9 +12,7 @@ public class GroupData {
   public GroupData withName(String name) { this.name = name; return this;}
   public GroupData withHeader(String header) { this.header = header; return this; }
   public GroupData withFooter(String footer) { this.footer = footer; return this;}
-  public int getId() {
-    return id;
-  }
+  public int getId() {  return id;  }
   public String getName() {
     return name;
   }
