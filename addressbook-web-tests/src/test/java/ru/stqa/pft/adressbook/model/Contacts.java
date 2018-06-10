@@ -3,7 +3,7 @@ package ru.stqa.pft.adressbook.model;
 import com.google.common.collect.ForwardingSet;
 import java.util.HashSet;
 import java.util.Set;
-
+import java.util.List;
 
 public class Contacts extends ForwardingSet<NewContact> {
 
