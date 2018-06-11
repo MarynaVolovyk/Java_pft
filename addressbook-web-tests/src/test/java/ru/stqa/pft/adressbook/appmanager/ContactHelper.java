@@ -9,10 +9,12 @@ import ru.stqa.pft.adressbook.model.Contacts;
 import ru.stqa.pft.adressbook.model.NewContact;
 
 import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
+
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class ContactHelper extends HelperBase {
+
+  private Contacts contactCache = null;
 
   public ContactHelper(WebDriver wd) {
     super(wd);
@@ -26,9 +28,9 @@ public class ContactHelper extends HelperBase {
     type(By.name("firstname"), newContact.getName());
     type(By.name("lastname"), newContact.getLastname());
     type(By.name("address"), newContact.getAddress1());
-    type(By.name("home"),newContact.getHomePhone());
-    type(By.name("mobile"),newContact.getMobilePhone());
-    type(By.name("email"),newContact.getEmail());
+    type(By.name("home"), newContact.getHomePhone());
+    type(By.name("mobile"), newContact.getMobilePhone());
+    type(By.name("email"), newContact.getEmail());
 
     if (creation) {
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(newContact.getGroup());
@@ -57,13 +59,13 @@ public class ContactHelper extends HelperBase {
     initContactModification(contact.getId());
     fillContactForm(contact, false);
     submitContactModification();
-     }
+  }
 
   public void delete(NewContact contact) {
     selectContactById(contact.getId());
     deleteContactSelected();
     confirmContactDeletion();
-      }
+  }
 
   public void selectContactById(int id) {
     wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
@@ -93,20 +95,18 @@ public class ContactHelper extends HelperBase {
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  private Contacts contactCache = null;
-
   public Contacts all() {
     Contacts contacts = new Contacts();
     List<WebElement> rows = wd.findElements(By.name("entry"));
-    for (WebElement row : rows){
-      List <WebElement> cells = row.findElements(By.tagName("td"));
+    for (WebElement row : rows) {
+      List<WebElement> cells = row.findElements(By.tagName("td"));
       int id = Integer.parseInt(cells.get(0).findElement(By.tagName("input")).getAttribute("value"));
       String name = cells.get(2).getText();
       String lastname = cells.get(1).getText();
       String allPhones = cells.get(5).getText();
       String address1 = cells.get(3).getText();
       String allEmails = cells.get(4).getText();
-      contacts.add(new NewContact().withId(id).withName(name).withLastname(lastname).withAddress1(address1).withAllPhones(allPhones).withAllEmails(allEmails));
+      contacts.add(new NewContact().withId(id).withName(name).withLastname(lastname).withAddress1(address1).withAllPhones(allPhones).withEmail(allEmails));
     }
     return contacts;
   }
@@ -124,11 +124,58 @@ public class ContactHelper extends HelperBase {
     String address1 = wd.findElement(By.name("address")).getAttribute("value");
     wd.navigate().back();
     return new NewContact().withId(contact.getId()).withName(name).withLastname(lastname)
-            .withHomePhone(homePhone).withWorkPhone(workPhone).withMobilePhone(mobilePhone).withEmail(email).withEmail2(email2)
+            .withHomePhone(homePhone).withWorkPhone(workPhone).withMobilePhone(mobilePhone).withEmail1(email).withEmail2(email2)
             .withEmail3(email3).withAddress1(address1);
+  }
+
+  public NewContact infoFromDetailsForm(NewContact contact) {
+    initContactDetailsViewById(contact.getId());
+    String[] unparsedDetailsInfoChunks = wd.findElement(By.id("content")).getText().split("\n");
+    NewContact newContact = new NewContact();
+    for (int i = 0; i < unparsedDetailsInfoChunks.length; i++) {
+      String currentChunk = unparsedDetailsInfoChunks[i];
+
+      if (currentChunk.startsWith("Member") || currentChunk.isEmpty()) {
+        continue;
+      }
+
+      if (i == 0) {
+        String[] fullName = currentChunk.split(" ");
+        newContact.withName(fullName[0]);
+        newContact.withLastname(fullName[1]);
+      } else {
+        if (currentChunk.startsWith("H:")) {
+          newContact.withHomePhone(currentChunk.substring("H:".length() + 1));
+        } else {
+          if (currentChunk.startsWith("M:")) {
+            newContact.withMobilePhone(currentChunk.substring("M:".length() + 1));
+          } else {
+            if (currentChunk.startsWith("W:")) {
+              newContact.withWorkPhone(currentChunk.substring("W:".length()+1));
+            } else {
+              if (currentChunk.contains("@")) {
+//                String previousEmails = newContact.getAllEmails();
+//                newContact.withAllEmails( (previousEmails == null ||  previousEmails.isEmpty() ) ? currentChunk : currentChunk + ", " + previousEmails);
+                newContact.withEmail( currentChunk );
+              } else {
+                if (i > 0) {
+                  String prevAddress = newContact.getAddress1();
+                  newContact.withAddress1( isEmpty(prevAddress) ? currentChunk : prevAddress + "\n" + currentChunk);
+              }
+              }
+            }
+          }
+        }
+      }
+    }
+    return newContact;
   }
 
   private void initContactModificationById(int id) {
     wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
+  }
+
+  private void initContactDetailsViewById(int id) {
+    wd.findElement(By.cssSelector(String.format("a[href='view.php?id=%s']", id))).click();
   }
 }
