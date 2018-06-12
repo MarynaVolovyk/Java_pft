@@ -1,5 +1,6 @@
 package ru.stqa.pft.adressbook.model;
 
+import java.io.File;
 import java.util.Objects;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
@@ -18,8 +19,9 @@ public class NewContact {
   private String email;
   private String email2;
   private String email3;
+  private File photo;
 
-  public NewContact() {
+    public NewContact() {
     name = "";
     lastname = "";
     address1 = "";
@@ -36,34 +38,18 @@ public class NewContact {
   public String getName() {
     return name;
   }
-
   public String getLastname() {
     return lastname;
   }
-
-  public String getAddress1() {
-    return address1;
-  }
-
+  public String getAddress1() { return address1;  }
   public String getGroup() {
     return group;
   }
-
-  public String getAllPhones() {
-    return allPhones;
-  }
-
-  public String getHomePhone() {
-    return homePhone;
-  }
-
-  public String getWorkPhone() {
-    return workPhone;
-  }
-
-  public String getMobilePhone() {
-    return mobilePhone;
-  }
+  public String getAllPhones() { return allPhones; }
+  public String getHomePhone() { return homePhone;  }
+  public String getWorkPhone() { return workPhone;  }
+  public String getMobilePhone() { return mobilePhone;  }
+  public File getPhoto() { return photo;  }
 
   public String getAllEmails() {
     StringBuilder emails = new StringBuilder();
@@ -73,17 +59,9 @@ public class NewContact {
     return emails.toString();
   }
 
-  public String getEmail() {
-    return email;
-  }
-
-  public String getEmail2() {
-    return email2;
-  }
-
-  public String getEmail3() {
-    return email3;
-  }
+  public String getEmail() {  return email; }
+  public String getEmail2() {  return email2;  }
+  public String getEmail3() {   return email3;  }
 
   public NewContact withId(int id) {
     this.id = id;
@@ -160,6 +138,9 @@ public class NewContact {
   public int getId() {
     return id;
   }
+  public NewContact withPhoto(File photo)
+  { this.photo = photo;
+  return this; }
 
   @Override
   public boolean equals(Object o) {

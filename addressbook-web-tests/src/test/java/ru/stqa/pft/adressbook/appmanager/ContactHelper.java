@@ -31,13 +31,13 @@ public class ContactHelper extends HelperBase {
     type(By.name("home"), newContact.getHomePhone());
     type(By.name("mobile"), newContact.getMobilePhone());
     type(By.name("email"), newContact.getEmail());
+    attach(By.name("photo"), newContact.getPhoto());
 
     if (creation) {
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(newContact.getGroup());
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
-//    click(By.name("submit"));
   }
 
   public void returnToContactPage() {
