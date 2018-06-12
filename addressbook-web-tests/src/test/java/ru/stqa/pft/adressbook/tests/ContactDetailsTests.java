@@ -24,7 +24,7 @@ public class ContactDetailsTests extends TestBase {
   }
 
   private String mergeDetailsInfo(NewContact contact){
-    return Arrays.asList(contact.getName(), contact.getLastname(), contact.getAddress1(),
+    return Arrays.asList(contact.getName(), contact.getLastname(), contact.getAddress(),
             contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone(), contact.getAllEmails())
             .stream()
             .filter((s) -> s!=null && !s.equals("") )

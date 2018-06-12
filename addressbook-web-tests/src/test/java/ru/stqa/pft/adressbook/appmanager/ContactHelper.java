@@ -27,7 +27,7 @@ public class ContactHelper extends HelperBase {
   public void fillContactForm(NewContact newContact, boolean creation) {
     type(By.name("firstname"), newContact.getName());
     type(By.name("lastname"), newContact.getLastname());
-    type(By.name("address"), newContact.getAddress1());
+    type(By.name("address"), newContact.getAddress());
     type(By.name("home"), newContact.getHomePhone());
     type(By.name("mobile"), newContact.getMobilePhone());
     type(By.name("email"), newContact.getEmail());
@@ -106,7 +106,7 @@ public class ContactHelper extends HelperBase {
       String allPhones = cells.get(5).getText();
       String address1 = cells.get(3).getText();
       String allEmails = cells.get(4).getText();
-      contacts.add(new NewContact().withId(id).withName(name).withLastname(lastname).withAddress1(address1).withAllPhones(allPhones).withEmail(allEmails));
+      contacts.add(new NewContact().withId(id).withName(name).withLastname(lastname).withAddress(address1).withAllPhones(allPhones).withEmail(allEmails));
     }
     return contacts;
   }
@@ -125,7 +125,7 @@ public class ContactHelper extends HelperBase {
     wd.navigate().back();
     return new NewContact().withId(contact.getId()).withName(name).withLastname(lastname)
             .withHomePhone(homePhone).withWorkPhone(workPhone).withMobilePhone(mobilePhone).withEmail1(email).withEmail2(email2)
-            .withEmail3(email3).withAddress1(address1);
+            .withEmail3(email3).withAddress(address1);
   }
 
   public NewContact infoFromDetailsForm(NewContact contact) {
@@ -159,8 +159,8 @@ public class ContactHelper extends HelperBase {
                 newContact.withEmail( currentChunk );
               } else {
                 if (i > 0) {
-                  String prevAddress = newContact.getAddress1();
-                  newContact.withAddress1( isEmpty(prevAddress) ? currentChunk : prevAddress + "\n" + currentChunk);
+                  String prevAddress = newContact.getAddress();
+                  newContact.withAddress( isEmpty(prevAddress) ? currentChunk : prevAddress + "\n" + currentChunk);
               }
               }
             }

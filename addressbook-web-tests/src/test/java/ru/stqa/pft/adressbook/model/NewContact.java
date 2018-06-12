@@ -1,15 +1,25 @@
 package ru.stqa.pft.adressbook.model;
 
+import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import java.io.File;
 import java.util.Objects;
-
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
+@XStreamAlias("contacts")
+
 public class NewContact {
+  @XStreamOmitField
   private int id;
+  @Expose
   private String name;
+  @Expose
   private String lastname;
-  private String address1;
+  @Expose
+  private String address;
+  @Expose
   private String group;
   private String homePhone;
   private String workPhone;
@@ -24,7 +34,7 @@ public class NewContact {
     public NewContact() {
     name = "";
     lastname = "";
-    address1 = "";
+    address = "";
     group = "";
     homePhone = "";
     workPhone = "";
@@ -41,7 +51,7 @@ public class NewContact {
   public String getLastname() {
     return lastname;
   }
-  public String getAddress1() { return address1;  }
+  public String getAddress() { return address;  }
   public String getGroup() {
     return group;
   }
@@ -78,8 +88,8 @@ public class NewContact {
     return this;
   }
 
-  public NewContact withAddress1(String address1) {
-    this.address1 = address1;
+  public NewContact withAddress(String address) {
+    this.address = address;
     return this;
   }
 
@@ -150,7 +160,7 @@ public class NewContact {
     return id == that.id &&
             Objects.equals(name, that.name) &&
             Objects.equals(lastname, that.lastname) &&
-            Objects.equals(address1, that.address1) &&
+            Objects.equals(address, that.address) &&
             Objects.equals(homePhone, that.homePhone) &&
             Objects.equals(workPhone, that.workPhone) &&
             Objects.equals(mobilePhone, that.mobilePhone) &&
@@ -161,7 +171,7 @@ public class NewContact {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, lastname, address1, homePhone, workPhone, mobilePhone, allPhones, email, email2, email3);
+    return Objects.hash(id, name, lastname, address, homePhone, workPhone, mobilePhone, allPhones, email, email2, email3);
   }
 
   @Override
@@ -170,7 +180,7 @@ public class NewContact {
             "id=" + id +
             ", name='" + name + '\'' +
             ", lastname='" + lastname + '\'' +
-            ", address1='" + address1 + '\'' +
+            ", address='" + address + '\'' +
             ", homePhone='" + homePhone + '\'' +
             ", workPhone='" + workPhone + '\'' +
             ", mobilePhone='" + mobilePhone + '\'' +
