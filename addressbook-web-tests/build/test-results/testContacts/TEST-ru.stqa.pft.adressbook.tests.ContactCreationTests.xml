@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ru.stqa.pft.adressbook.tests.ContactCreationTests" tests="3" skipped="0" failures="0" errors="0" timestamp="2018-06-13T09:40:43" hostname="DESKTOP-O0NV0OH" time="5.185">
+<testsuite name="ru.stqa.pft.adressbook.tests.ContactCreationTests" tests="3" skipped="0" failures="0" errors="0" timestamp="2018-06-13T10:06:31" hostname="DESKTOP-O0NV0OH" time="6.295">
   <properties/>
-  <testcase name="testAddNewContact[0](NewContact{id=0, name='Name 0', lastname='Lastname 0', address='dom&#10;0', homePhone='', workPhone='', mobilePhone='', allPhones='', email='', email2='', email3=''})" classname="ru.stqa.pft.adressbook.tests.ContactCreationTests" time="1.813"/>
-  <testcase name="testAddNewContact[1](NewContact{id=0, name='Name 1', lastname='Lastname 1', address='dom&#10;1', homePhone='', workPhone='', mobilePhone='', allPhones='', email='', email2='', email3=''})" classname="ru.stqa.pft.adressbook.tests.ContactCreationTests" time="1.59"/>
-  <testcase name="testAddNewContact[2](NewContact{id=0, name='Name 2', lastname='Lastname 2', address='dom&#10;2', homePhone='', workPhone='', mobilePhone='', allPhones='', email='', email2='', email3=''})" classname="ru.stqa.pft.adressbook.tests.ContactCreationTests" time="1.781"/>
+  <testcase name="testAddNewContact[0](NewContact{id=0, name='Name 0', lastname='Lastname 0', address='dom&#10;0', homePhone='', workPhone='', mobilePhone='', allPhones='', email='', email2='', email3=''})" classname="ru.stqa.pft.adressbook.tests.ContactCreationTests" time="2.269"/>
+  <testcase name="testAddNewContact[1](NewContact{id=0, name='Name 1', lastname='Lastname 1', address='dom&#10;1', homePhone='', workPhone='', mobilePhone='', allPhones='', email='', email2='', email3=''})" classname="ru.stqa.pft.adressbook.tests.ContactCreationTests" time="1.933"/>
+  <testcase name="testAddNewContact[2](NewContact{id=0, name='Name 2', lastname='Lastname 2', address='dom&#10;2', homePhone='', workPhone='', mobilePhone='', allPhones='', email='', email2='', email3=''})" classname="ru.stqa.pft.adressbook.tests.ContactCreationTests" time="2.092"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
