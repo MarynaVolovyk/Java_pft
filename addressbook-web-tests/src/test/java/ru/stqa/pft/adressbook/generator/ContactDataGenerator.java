@@ -52,26 +52,26 @@ public class ContactDataGenerator {
     XStream xstream = new XStream();
     xstream.processAnnotations(NewContact.class);
     String xml = xstream.toXML(contacts);
-    Writer writer = new FileWriter(file);
-    writer.write(xml);
-    writer.close();
+    try (Writer writer = new FileWriter(file)) {
+      writer.write(xml);
+    }
   }
 
   private void saveAsCsv(List<NewContact> contacts, File file) throws IOException {
     System.out.println(new File(".").getAbsolutePath());
-    Writer writer = new FileWriter(file);
-    for (NewContact contact : contacts) {
-      writer.write(String.format("%s,%s,%s\n", contact.getName(), contact.getLastname(), contact.getAddress(),contact.getGroup()));
+    try (Writer writer = new FileWriter(file)) {
+      for (NewContact contact : contacts) {
+        writer.write(String.format("%s,%s,%s\n", contact.getName(), contact.getLastname(), contact.getAddress(), contact.getGroup()));
+      }
     }
-    writer.close();
   }
 
   private void saveAsJson(List<NewContact> contacts, File file) throws IOException {
     Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
     String json = gson.toJson(contacts);
-    Writer writer = new FileWriter(file);
-    writer.write(json);
-    writer.close();
+    try (Writer writer = new FileWriter(file)) {
+      writer.write(json);
+    }
   }
 
   private List<NewContact> generateContacts(int count) {
