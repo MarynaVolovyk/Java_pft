@@ -1,7 +1,5 @@
 package ru.stqa.pft.adressbook.appmanager;
 
-import com.sun.corba.se.pept.transport.ContactInfo;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -10,14 +8,13 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
-  private final Properties properties;
+  public Properties properties;
   WebDriver wd;
 
 
@@ -64,5 +61,4 @@ public class ApplicationManager {
     public NavigationHelper goTo() {
       return navigationHelper;
     }
-
   }

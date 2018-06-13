@@ -15,7 +15,8 @@ public class ContactDeletionTests extends TestBase {
     app.goTo().home();
     if (!app.contact().isThereAContact()) {
       app.goTo().gotoAddNew();
-      app.contact().create(new NewContact().withName("katia").withAddress("Rydluwka 5, Krakow").withLastname("annete").withGroup("test1"));
+      app.contact().create(new NewContact().withName(app.properties.getProperty("contactName")).withAddress(app.properties.getProperty("contactAddress"))
+              .withLastname(app.properties.getProperty("contactLastname")).withGroup(app.properties.getProperty("groupName")));
     }
   }
 
