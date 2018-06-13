@@ -34,7 +34,9 @@ public class ContactHelper extends HelperBase {
     attach(By.name("photo"), newContact.getPhoto());
 
     if (creation) {
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(newContact.getGroup());
+      Select groupSelector = new Select(wd.findElement(By.name("new_group")));
+      groupSelector.selectByIndex(0);
+
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
@@ -48,8 +50,8 @@ public class ContactHelper extends HelperBase {
     wd.findElement(By.xpath(String.format("//tr[.//input[@value='%s']]/td[8]/a", id))).click();
   }
 
-  public void create(NewContact contact, boolean b) {
-    fillContactForm(contact, b);
+  public void create(NewContact contact) {
+    fillContactForm(contact, true);
     submitNewContact();
     returnToContactPage();
   }
