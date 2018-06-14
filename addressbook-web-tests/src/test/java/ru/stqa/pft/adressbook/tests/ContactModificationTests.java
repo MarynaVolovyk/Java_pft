@@ -25,7 +25,8 @@ public class ContactModificationTests extends TestBase {
 
     Contacts before = (Contacts)app.contact().all();
     NewContact modifiedContact = before.iterator().next();
-    NewContact contact = new NewContact().withId(modifiedContact.getId()).withName(app.properties.getProperty("modifiedContactName")).withLastname(app.properties.getProperty("modifiedContactLastname")).withAddress(app.properties.getProperty("modifiedContactAddress"));
+    NewContact contact = new NewContact().withId(modifiedContact.getId()).withName(app.properties.getProperty("modifiedContactName"))
+            .withLastname(app.properties.getProperty("modifiedContactLastname")).withAddress(app.properties.getProperty("modifiedContactAddress"));
     app.contact().modify(contact);
     app.goTo().home();
     Contacts after = (Contacts)app.contact().all();
