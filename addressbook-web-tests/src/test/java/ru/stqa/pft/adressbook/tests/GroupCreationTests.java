@@ -60,6 +60,7 @@ public class GroupCreationTests extends TestBase {
     int newId = after.stream().mapToInt((g) -> g.getId()).max().getAsInt();
     assertThat(after, equalTo(
             before.withAdded(group.withId(newId))));
+    verifyGroupListInUI();
       }
 
   @Test(enabled = false)
