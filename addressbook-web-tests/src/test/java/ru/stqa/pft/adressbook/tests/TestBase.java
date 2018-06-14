@@ -8,8 +8,10 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import ru.stqa.pft.adressbook.appmanager.ApplicationManager;
+import ru.stqa.pft.adressbook.model.Contacts;
 import ru.stqa.pft.adressbook.model.GroupData;
 import ru.stqa.pft.adressbook.model.Groups;
+import ru.stqa.pft.adressbook.model.NewContact;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -20,11 +22,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 public class TestBase {
 
-  Logger logger = LoggerFactory.getLogger(TestBase.class);
-
-
   protected static final ApplicationManager app
           = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
+  Logger logger = LoggerFactory.getLogger(TestBase.class);
 
   @BeforeSuite
   public void setUp() throws Exception {
@@ -40,9 +40,10 @@ public class TestBase {
   public void logTestStart(Method m, Object[] p) {
     logger.info("Start test " + m.getName() + "with parameters" + Arrays.asList(p));
   }
+
   @AfterMethod(alwaysRun = true)
   public void logTestStop(Method m) {
-    logger.info("Stop test "+ m.getName());
+    logger.info("Stop test " + m.getName());
   }
 
 
@@ -55,4 +56,15 @@ public class TestBase {
               .collect(Collectors.toSet())));
     }
   }
+
+  public void verifyContactListInUI() {
+    if (Boolean.getBoolean("verifyUI")) {
+      Contacts dbContacts = app.db().contacts();
+      Contacts uiContacts = app.contact().all();
+      assertThat(uiContacts, equalTo(dbContacts.stream()
+              .map((g) -> new NewContact().withId(g.getId()).withName(g.getName()).withLastname(g.getLastname()).withAddress(g.getAddress()))
+              .collect(Collectors.toSet())));
+    }
+  }
 }
+
