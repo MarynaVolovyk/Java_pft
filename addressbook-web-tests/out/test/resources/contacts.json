@@ -2,19 +2,19 @@
   {
     "name": "Name 0",
     "lastname": "Lastname 0",
-    "address": "dom\n0",
+    "address": "dom\r\n0",
     "group": "test1"
   },
   {
     "name": "Name 1",
     "lastname": "Lastname 1",
-    "address": "dom\n1",
+    "address": "dom\r\n1",
     "group": "test1"
   },
   {
     "name": "Name 2",
     "lastname": "Lastname 2",
-    "address": "dom\n2",
+    "address": "dom\r\n2",
     "group": "test1"
   }
 ]
