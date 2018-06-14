@@ -3,33 +3,55 @@ package ru.stqa.pft.adressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 import java.util.Objects;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 @XStreamAlias("contacts")
+@Entity
+@Table(name = "addressbook")
 
 public class NewContact {
+  @Id
+  @Column(name="id")
   @XStreamOmitField
   private int id;
   @Expose
+  @Column(name="firstname")
   private String name;
   @Expose
+  @Column(name="lastname")
   private String lastname;
   @Expose
+  @Type(type = "text")
   private String address;
   @Expose
+  @Transient
   private String group;
+  @Column(name="home")
+  @Type(type = "text")
   private String homePhone;
+  @Column(name="work")
+  @Type(type = "text")
   private String workPhone;
+  @Column(name="mobile")
+  @Type(type = "text")
   private String mobilePhone;
+  @Transient
   private String allPhones;
   //private String allEmails;
+  @Type(type = "text")
   private String email;
+  @Type(type = "text")
   private String email2;
+  @Type(type = "text")
   private String email3;
-  private File photo;
+  @Column(name="photo")
+  @Type(type = "text")
+  private String photo;
 
     public NewContact() {
     name = "";
@@ -59,7 +81,7 @@ public class NewContact {
   public String getHomePhone() { return homePhone;  }
   public String getWorkPhone() { return workPhone;  }
   public String getMobilePhone() { return mobilePhone;  }
-  public File getPhoto() { return photo;  }
+  public File getPhoto() { return new File(photo);  }
 
   public String getAllEmails() {
     StringBuilder emails = new StringBuilder();
@@ -149,7 +171,7 @@ public class NewContact {
     return id;
   }
   public NewContact withPhoto(File photo)
-  { this.photo = photo;
+  { this.photo = photo.getPath();
   return this; }
 
   @Override
