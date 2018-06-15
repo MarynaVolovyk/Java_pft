@@ -1,11 +1,13 @@
 package ru.stqa.pft.adressbook.appmanager;
 
+//import com.sun.org.apache.xpath.internal.operations.String;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.adressbook.model.Contacts;
+import ru.stqa.pft.adressbook.model.GroupData;
 import ru.stqa.pft.adressbook.model.NewContact;
 
 import java.util.List;
@@ -67,6 +69,13 @@ public class ContactHelper extends HelperBase {
     selectContactById(contact.getId());
     deleteContactSelected();
     confirmContactDeletion();
+  }
+  public void addGroup(NewContact contact, GroupData groupData) {
+    selectContactById(contact.getId());
+    Select groupSelector = new Select(wd.findElement(By.name("to_group")));
+    groupSelector.selectByValue(Integer.toString(groupData.getId()));
+    //click on Add To button
+    click(By.name("add"));
   }
 
   public void selectContactById(int id) {

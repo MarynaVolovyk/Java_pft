@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import ru.stqa.pft.adressbook.model.Groups;
 import ru.stqa.pft.adressbook.model.NewContact;
 import ru.stqa.pft.adressbook.model.Contacts;
 
@@ -55,9 +56,10 @@ public class ContactCreationTests extends TestBase {
 
   @Test(dataProvider = "validContactsFromJson")
   public void testAddNewContact(NewContact contact) {
+    Groups groups = app.db().groups();
+//    File photo= new File("src/test/resources/avatar.jpg");
     app.goTo().home();
     Contacts before = app.db().contacts();
-    File photo= new File("src/test/resources/avatar.jpg");
     app.goTo().gotoAddNew();
     app.contact().create(contact);
     Contacts after = app.db().contacts();
