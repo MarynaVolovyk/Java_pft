@@ -7,7 +7,10 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 @XStreamAlias("contacts")
@@ -29,8 +32,8 @@ public class NewContact {
   @Type(type = "text")
   private String address;
   @Expose
-  @Transient
-  private String group;
+
+
   @Column(name="home")
   @Type(type = "text")
   private String homePhone;
@@ -53,11 +56,15 @@ public class NewContact {
   @Type(type = "text")
   private String photo;
 
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "address_in_groups",
+          joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+  private Set<GroupData> groups = new HashSet<GroupData>();
+
     public NewContact() {
     name = "";
     lastname = "";
     address = "";
-    group = "";
     homePhone = "";
     workPhone = "";
     mobilePhone = "";
@@ -74,9 +81,6 @@ public class NewContact {
     return lastname;
   }
   public String getAddress() { return address;  }
-  public String getGroup() {
-    return group;
-  }
   public String getAllPhones() { return allPhones; }
   public String getHomePhone() { return homePhone;  }
   public String getWorkPhone() { return workPhone;  }
@@ -90,6 +94,8 @@ public class NewContact {
     if (!isEmpty(email3)) emails.append(email3);
     return emails.toString();
   }
+
+  public Groups getGroups() {return new Groups(groups);  }
 
   public String getEmail() {  return email; }
   public String getEmail2() {  return email2;  }
@@ -132,11 +138,6 @@ public class NewContact {
 
   public NewContact withMobilePhone(String mobilePhone) {
     this.mobilePhone = mobilePhone;
-    return this;
-  }
-
-  public NewContact withGroup(String group) {
-    this.group = group;
     return this;
   }
 

@@ -16,7 +16,7 @@ public class ContactDeletionTests extends TestBase {
     if (app.db().contacts().size() == 0) {
       app.goTo().gotoAddNew();
       app.contact().create(new NewContact().withName(app.properties.getProperty("contactName")).withAddress(app.properties.getProperty("contactAddress"))
-              .withLastname(app.properties.getProperty("contactLastname")).withGroup(app.properties.getProperty("groupName")));
+              .withLastname(app.properties.getProperty("contactLastname"))); //.withGroup(app.properties.getProperty("groupName")));
     }
   }
 
