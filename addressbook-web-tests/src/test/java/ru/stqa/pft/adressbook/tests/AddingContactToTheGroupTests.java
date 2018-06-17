@@ -16,9 +16,10 @@ public class AddingContactToTheGroupTests extends TestBase {
   public void ensurePreconditions() {
     app.goTo().home();
     if (app.db().contacts().size() == 0) {
+      Groups groups = app.db().groups();
       app.goTo().gotoAddNew();
       app.contact().create(new NewContact().withName(app.properties.getProperty("contactName")).withAddress(app.properties.getProperty("contactAddress"))
-              .withLastname(app.properties.getProperty("contactLastname")));
+              .withLastname(app.properties.getProperty("contactLastname")).inGroup(groups.iterator().next()));
     }
     if (app.db().groups().size() == 0) {
       app.goTo().groupPage();
