@@ -18,40 +18,50 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 @Table(name = "addressbook")
 
 public class NewContact {
+
   @Id
   @Column(name="id")
   @XStreamOmitField
   private int id;
+
   @Expose
   @Column(name="firstname")
   private String name;
+
   @Expose
   @Column(name="lastname")
   private String lastname;
+
   @Expose
   @Type(type = "text")
   private String address;
+
   @Expose
-
-
   @Column(name="home")
   @Type(type = "text")
   private String homePhone;
+
   @Column(name="work")
   @Type(type = "text")
   private String workPhone;
+
   @Column(name="mobile")
   @Type(type = "text")
   private String mobilePhone;
+
   @Transient
   private String allPhones;
   //private String allEmails;
+
   @Type(type = "text")
   private String email;
+
   @Type(type = "text")
   private String email2;
+
   @Type(type = "text")
   private String email3;
+
   @Column(name="photo")
   @Type(type = "text")
   private String photo;
