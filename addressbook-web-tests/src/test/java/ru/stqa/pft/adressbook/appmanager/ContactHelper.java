@@ -36,11 +36,12 @@ public class ContactHelper extends HelperBase {
 //    attach(By.name("photo"), newContact.getPhoto());
 
     if (creation) {
-      Select groupSelector = new Select(wd.findElement(By.name("new_group")));
-      groupSelector.selectByIndex(0);
-
-    } else {
-      Assert.assertFalse(isElementPresent(By.name("new_group")));
+      if (newContact.getGroups().size() > 0) {
+        Assert.assertTrue(newContact.getGroups().size() == 1);
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(newContact.getGroups().iterator().next().getName());
+      } else {
+        Assert.assertFalse(isElementPresent(By.name("new_group")));
+      }
     }
   }
 

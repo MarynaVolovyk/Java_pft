@@ -225,4 +225,8 @@ public class NewContact {
             '}';
   }
 
+  public NewContact inGroup(GroupData group) {
+      groups.add(group);
+      return this;
+  }
 }

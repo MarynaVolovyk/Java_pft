@@ -59,12 +59,13 @@ public class ContactCreationTests extends TestBase {
     Groups groups = app.db().groups();
 //    File photo= new File("src/test/resources/avatar.jpg");
     app.goTo().home();
+    NewContact newContact = new NewContact().withName("Katia").withLastname("Petrova").withAddress("ul. Mira").inGroup(groups.iterator().next());
     Contacts before = app.db().contacts();
     app.goTo().gotoAddNew();
-    app.contact().create(contact);
+    app.contact().create(newContact);
     Contacts after = app.db().contacts();
     assertThat(after.size(), equalTo(before.size() + 1));
-    assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+    assertThat(after, equalTo(before.withAdded(newContact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
     verifyContactListInUI();
   }
 }

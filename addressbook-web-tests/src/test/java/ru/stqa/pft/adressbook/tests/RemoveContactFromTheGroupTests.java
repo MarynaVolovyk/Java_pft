@@ -17,9 +17,10 @@ public class RemoveContactFromTheGroupTests extends TestBase {
   public void ensurePreconditions() {
     app.goTo().home();
     if (app.db().contacts().size() == 0) {
+      Groups groups = app.db().groups();
       app.goTo().gotoAddNew();
       app.contact().create(new NewContact().withName(app.properties.getProperty("contactName")).withAddress(app.properties.getProperty("contactAddress"))
-              .withLastname(app.properties.getProperty("contactLastname")));
+              .withLastname(app.properties.getProperty("contactLastname")).inGroup(groups.iterator().next()));
     }
     if (app.db().groups().size() == 0) {
       app.goTo().groupPage();
@@ -31,8 +32,8 @@ public class RemoveContactFromTheGroupTests extends TestBase {
   public void testRemoveContactFromTheGroup() {
     NewContact contact = getContactWithGroup();
     Groups before = new Groups(contact.getGroups());
-    Groups groups = contact.getGroups();
-    GroupData selectedGroup = groups.iterator().next();
+//    Groups groups = contact.getGroups();
+    GroupData selectedGroup = contact.getGroups().iterator().next();
 
     app.goTo().home();
     app.contact().removeGroupFromContact(contact, selectedGroup);
@@ -51,11 +52,16 @@ public class RemoveContactFromTheGroupTests extends TestBase {
       if (contactSize > 0) {
         return contact;
       } else if (contactSize == 0) {
-        app.goTo().home();
-        app.contact().create(new NewContact().withName(app.properties.getProperty("contactName")).withAddress(app.properties.getProperty("contactAddress"))
-                .withLastname(app.properties.getProperty("contactLastname")));
+        Groups groups = app.db().groups();
+        app.goTo().gotoAddNew();
+        NewContact contacWithGroup = new NewContact().withName(app.properties.getProperty("contactName")).withAddress(app.properties.getProperty("contactAddress"))
+                .withLastname(app.properties.getProperty("contactLastname")).inGroup(groups.iterator().next());
+        app.contact().create(contacWithGroup);
+        Contacts newContacts = app.db().contacts();
+        contacWithGroup.withId(newContacts.stream().mapToInt((g) -> g.getId()).max().getAsInt());
+        return contacWithGroup;
       }
-      return contact;
+      return null;
     }
     return null;
   }
