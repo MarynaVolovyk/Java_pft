@@ -15,20 +15,22 @@ public class ContactDetailsTests extends TestBase {
     NewContact contact = app.contact().all().iterator().next();
     NewContact contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
 
-    NewContact contactInfoFromDetailsForm = app.contact().infoFromDetailsForm(contact);
-
-    String mergedInfoFromDetailsForm = mergeDetailsInfo(contactInfoFromDetailsForm);
+    String contactInfoFromDetailsForm = fixDetailsInfo(app.contact().infoFromDetailsForm(contact));
     String mergedInfoFromEditForm = mergeDetailsInfo(contactInfoFromEditForm);
 
-    assertThat(mergedInfoFromDetailsForm, equalTo(mergedInfoFromEditForm));
+    assertThat(contactInfoFromDetailsForm, equalTo(mergedInfoFromEditForm));
+  }
+
+  private String fixDetailsInfo(String contactInfo) {
+    return contactInfo.replaceAll("\\s", "").replaceAll("[-() ]","").replace("H:","")
+            .replace("M:","").replace("W:","").split("Memberof:")[0];
   }
 
   private String mergeDetailsInfo(NewContact contact){
     return Arrays.asList(contact.getName(), contact.getLastname(), contact.getAddress(),
             contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone(), contact.getAllEmails())
-            .stream()
-            .filter((s) -> s!=null && !s.equals("") )
-            .map(ContactDetailsTests::cleaned).collect(Collectors.joining("\n"));
+            .stream().filter((s) -> s!=null && !s.equals(""))
+            .map(ContactDetailsTests::cleaned).collect(Collectors.joining(""));
   }
 
   public static String cleaned(String allEmails) {

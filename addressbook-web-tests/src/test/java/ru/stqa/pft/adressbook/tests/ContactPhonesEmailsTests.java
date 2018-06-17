@@ -17,14 +17,20 @@ public class ContactPhonesEmailsTests extends TestBase{
     NewContact contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
 
     assertThat(contact.getAllPhones(), equalTo(mergePhones(contactInfoFromEditForm)));
+    assertThat(contact.getAllEmails(), equalTo(mergeEmails(contactInfoFromEditForm)));
+    assertThat(contact.getAddress(), equalTo(contactInfoFromEditForm.getAddress()));
   }
 
   private String mergePhones(NewContact contact){
-           return Arrays.asList(contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone(), contact.getEmail(), contact.getEmail2(), contact.getEmail3())
+           return Arrays.asList(contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone())
           .stream().filter((s) -> ! s.equals(""))
           .map(ContactPhonesEmailsTests::cleaned).collect(Collectors.joining("\n"));
   }
-
+  private String mergeEmails(NewContact contact){
+    return Arrays.asList(contact.getEmail(), contact.getEmail2(), contact.getEmail3())
+            .stream().filter((s) -> ! s.equals(""))
+            .map(ContactPhonesEmailsTests::cleaned).collect(Collectors.joining("\n"));
+  }
   public static String cleaned(String phone) {
     return phone.replaceAll("\\s", "").replaceAll("[-() ]","");
   }

@@ -139,47 +139,10 @@ public class ContactHelper extends HelperBase {
             .withEmail3(email3).withAddress(address1);
   }
 
-  public NewContact infoFromDetailsForm(NewContact contact) {
+  public String infoFromDetailsForm(NewContact contact) {
     initContactDetailsViewById(contact.getId());
-    String[] unparsedDetailsInfoChunks = wd.findElement(By.id("content")).getText().split("\n");
-    NewContact newContact = new NewContact();
-    for (int i = 0; i < unparsedDetailsInfoChunks.length; i++) {
-      String currentChunk = unparsedDetailsInfoChunks[i];
-
-      if (currentChunk.startsWith("Member") || currentChunk.isEmpty()) {
-        continue;
-      }
-
-      if (i == 0) {
-        String[] fullName = currentChunk.split(" ");
-        newContact.withName(fullName[0]);
-        newContact.withLastname(fullName[1]);
-      } else {
-        if (currentChunk.startsWith("H:")) {
-          newContact.withHomePhone(currentChunk.substring("H:".length() + 1));
-        } else {
-          if (currentChunk.startsWith("M:")) {
-            newContact.withMobilePhone(currentChunk.substring("M:".length() + 1));
-          } else {
-            if (currentChunk.startsWith("W:")) {
-              newContact.withWorkPhone(currentChunk.substring("W:".length()+1));
-            } else {
-              if (currentChunk.contains("@")) {
-//                String previousEmails = newContact.getAllEmails();
-//                newContact.withAllEmails( (previousEmails == null ||  previousEmails.isEmpty() ) ? currentChunk : currentChunk + ", " + previousEmails);
-                newContact.withEmail( currentChunk );
-              } else {
-                if (i > 0) {
-                  String prevAddress = newContact.getAddress();
-                  newContact.withAddress( isEmpty(prevAddress) ? currentChunk : prevAddress + "\n" + currentChunk);
-              }
-              }
-            }
-          }
-        }
-      }
-    }
-    return newContact;
+    String detailsInfo = wd.findElement(By.id("content")).getText();
+    return detailsInfo;
   }
 
   private void initContactModificationById(int id) {
