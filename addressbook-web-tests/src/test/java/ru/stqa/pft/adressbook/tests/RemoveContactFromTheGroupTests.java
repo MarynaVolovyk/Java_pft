@@ -10,7 +10,8 @@ import ru.stqa.pft.adressbook.model.NewContact;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class AddingContactToTheGroupTests extends TestBase {
+
+public class RemoveContactFromTheGroupTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
@@ -27,53 +28,35 @@ public class AddingContactToTheGroupTests extends TestBase {
   }
 
   @Test
-  public void testAddingContactToTheGroup() {
-    NewContact contact = getContactWithLessGroups();
-    GroupData group = getMissingGroup(contact);
+  public void testRemoveContactFromTheGroup() {
+    NewContact contact = getContactWithGroup();
     Groups before = new Groups(contact.getGroups());
+    Groups groups = contact.getGroups();
+    GroupData selectedGroup = groups.iterator().next();
+
     app.goTo().home();
-    app.contact().addGroup(contact, group);
+    app.contact().removeGroupFromContact(contact, selectedGroup);
 
     Contacts contactsAfter = app.db().contacts();
     NewContact contactAfter = contactsAfter.getContactWithID(contact.getId());
     Groups after = new Groups(contactAfter.getGroups());
-    before.add(group);
+    before.remove(selectedGroup);
     assertThat(after.size(), equalTo(before.size()));
     assertThat(after, equalTo(before));
   }
 
-  public GroupData getMissingGroup(NewContact contact) {
-
-    for (GroupData group : app.db().groups()) {
-      if (!contact.getGroups().contains(group)) {
-        return group;
-      }
-    }
-        app.goTo().groupPage();
-        app.group().createGroup(new GroupData().withName("test 1").withHeader("header 1").withFooter("footer 1"));
-
-    for (GroupData group : app.db().groups()) {
-      if (!contact.getGroups().contains(group)) {
-        return group;
-      }
-    }
-    return null;
-  }
-
-  public NewContact getContactWithLessGroups() {
-    int groupSize = app.db().groups().size();
+  public NewContact getContactWithGroup() {
     for (NewContact contact : app.db().contacts()) {
       int contactSize = contact.getGroups().size();
-      if (contactSize < groupSize) {
+      if (contactSize > 0) {
         return contact;
-      } else if (contactSize == groupSize) {
-        app.goTo().groupPage();
-        app.group().createGroup(new GroupData().withName("test 1").withHeader("header 1").withFooter("footer 1"));
-        return contact;
+      } else if (contactSize == 0) {
+        app.goTo().home();
+        app.contact().create(new NewContact().withName(app.properties.getProperty("contactName")).withAddress(app.properties.getProperty("contactAddress"))
+                .withLastname(app.properties.getProperty("contactLastname")));
       }
-      return null;
+      return contact;
     }
     return null;
   }
 }
-
