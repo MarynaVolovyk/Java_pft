@@ -33,10 +33,13 @@ public class AddingContactToTheGroupTests extends TestBase {
     Groups before = new Groups(contact.getGroups());
     app.goTo().home();
     app.contact().addGroup(contact, group);
-    Groups after = new Groups(contact.getGroups());
-    assertThat(after.size(), equalTo((before.size() + 1)));
 
-//    assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+    Contacts contactsAfter = app.db().contacts();
+    NewContact contactAfter = contactsAfter.getContactWithID(contact.getId());
+    Groups after = new Groups(contactAfter.getGroups());
+    before.add(group);
+    assertThat(after.size(), equalTo(before.size()));
+    assertThat(after, equalTo(before));
   }
 
   private GroupData getMissingGroup(NewContact contact) {
