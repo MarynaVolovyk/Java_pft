@@ -1,7 +1,6 @@
 package ru.stqa.pft.mantis.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 public class RegistrationHelper extends HelperBase {
 
@@ -10,11 +9,10 @@ public class RegistrationHelper extends HelperBase {
   }
 
   public void start(String username, String email) {
-    String url = app.getProperty("web.baseURL") + "/signup_page.php";
+    wd.get(app.getProperty("web.baseUrl") + "/signup_page.php");
     type(By.name("username"), username);
     type(By.name("email"), email);
     click(By.cssSelector("input[value='Signup']"));
-//    wd.get(url);
   }
 
   public void finish(String confirmationLink, String password) {
