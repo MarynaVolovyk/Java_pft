@@ -24,9 +24,9 @@ import java.util.Set;
       return delegate;
     }
 
-    public Users withAdded(UserData contact) {
+    public Users withAdded(UserData user) {
       Users users = new Users(this);
-      users.add(contact);
+      users.add(user);
       return users;
     }
     public Users without(UserData user) {

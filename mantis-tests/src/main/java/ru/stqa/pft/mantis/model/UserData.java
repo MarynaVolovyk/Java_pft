@@ -23,10 +23,12 @@ public class UserData {
 
   @Expose
   @Column(name="username")
+  @Type(type = "text")
   private String username;
 
   @Expose
   @Column(name="realname")
+  @Type(type = "text")
   private String realname;
 
   @Expose
@@ -73,6 +75,16 @@ public class UserData {
   }
 
   @Override
+  public String toString() {
+    return "UserData{" +
+            "id=" + id +
+            ", username='" + username + '\'' +
+            ", realname='" + realname + '\'' +
+            ", email='" + email + '\'' +
+            '}';
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
@@ -87,15 +99,5 @@ public class UserData {
   public int hashCode() {
 
     return Objects.hash(id, username, realname, email);
-  }
-
-  @Override
-  public String toString() {
-    return "UserData{" +
-            "id=" + id +
-            ", username='" + username + '\'' +
-            ", realname='" + realname + '\'' +
-            ", email='" + email + '\'' +
-            '}';
   }
 }
