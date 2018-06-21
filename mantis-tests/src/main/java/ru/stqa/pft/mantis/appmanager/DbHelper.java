@@ -12,8 +12,23 @@ import java.util.List;
 
 public class DbHelper {
 
+  private ApplicationManager app;
+
   private final SessionFactory sessionFactory;
 
+    public DbHelper(ApplicationManager app) {
+    this.app = app;
+
+      // A SessionFactory is set up once for an application!
+      final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+              .configure() // configures settings from hibernate.cfg.xml
+              .build();
+
+      sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+     }
+
+
+/*
   public DbHelper() {
 
   // A SessionFactory is set up once for an application!
@@ -23,6 +38,7 @@ public class DbHelper {
 
     sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
   }
+*/
   public Users users() {
     Session session = sessionFactory.openSession();
     session.beginTransaction();

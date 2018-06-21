@@ -23,20 +23,18 @@ public class UserData {
 
   @Expose
   @Column(name="username")
-  @Type(type = "text")
   private String username;
 
   @Expose
   @Column(name="realname")
-  @Type(type = "text")
   private String realname;
 
   @Expose
   @Column(name="email")
-  @Type(type = "text")
+  //@Type(type = "mediumtext")
   private String email;
 
-  private Set<UserData> users = new HashSet<UserData>();
+  //private Set<UserData> users = new HashSet<UserData>();
 
   public int getId() {
     return id;
